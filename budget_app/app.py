@@ -5,8 +5,9 @@ from flask_migrate import Migrate
 from config import Config
 from extensions import db
 
-from resources.expense import ExpenseListResource, ExpenseYearFilterResource, ExpenseMonthFilterResource
-from resources.user import UserResource, UserListResource
+from resources.expense import ExpenseListResource, ExpenseResource, \
+    ExpenseYearFilterResource, ExpenseMonthFilterResource
+from resources.user import UserResource, UserCreateResource
 
 
 def create_app() -> Flask:
@@ -27,9 +28,10 @@ def register_resources(app):
     """Function register all resources within application and share endpoints for specify resource."""
     api = Api(app)
     api.add_resource(ExpenseListResource, '/expenses')
+    api.add_resource(ExpenseResource, '/expense/<int:id>')
     api.add_resource(ExpenseYearFilterResource, '/expenses/<int:year>')
     api.add_resource(ExpenseMonthFilterResource, '/expenses/<int:year>/<int:month>')
-    api.add_resource(UserListResource, '/users')
+    api.add_resource(UserCreateResource, '/users')
     api.add_resource(UserResource, '/users/<string:username>')
 
 
