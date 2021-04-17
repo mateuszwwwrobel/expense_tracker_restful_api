@@ -1,13 +1,15 @@
 from flask import Flask
 from flask_restful import Api
+from flask_cors import CORS
 
 from flask_migrate import Migrate
 from config import Config
-from extensions import db
+from extensions import db, jwt
 
 from resources.expense import ExpenseListResource, ExpenseResource, \
     ExpenseYearFilterResource, ExpenseMonthFilterResource
 from resources.user import UserResource, UserCreateResource
+from resources.token import TokenResource
 
 
 def create_app() -> Flask:
@@ -16,11 +18,12 @@ def create_app() -> Flask:
     app.config.from_object(Config)
     register_extensions(app)
     register_resources(app)
+    CORS(app)
     return app
-
 
 def register_extensions(app):
     db.init_app(app)
+    jwt.init_app(app)
     migrate = Migrate(app, db)
 
 
@@ -33,6 +36,7 @@ def register_resources(app):
     api.add_resource(ExpenseMonthFilterResource, '/expenses/<int:year>/<int:month>')
     api.add_resource(UserCreateResource, '/users')
     api.add_resource(UserResource, '/users/<string:username>')
+    api.add_resource(TokenResource, '/token')
 
 
 if __name__ == '__main__':

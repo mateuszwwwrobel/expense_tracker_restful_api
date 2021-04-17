@@ -75,7 +75,7 @@ class ExpenseResource(Resource):
     def get(self, id):
         expense = Expense.get_by_id(id)
         if expense:
-            return {'book': expense.data}, HTTPStatus.OK
+            return {'expense': expense.data}, HTTPStatus.OK
         else:
             return {'message': 'Expense with specify ID not found.'}, HTTPStatus.NOT_FOUND
 
