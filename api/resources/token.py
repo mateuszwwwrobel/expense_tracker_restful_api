@@ -14,8 +14,9 @@ class TokenResource(Resource):
         password = data.get('password')
 
         user = User.get_user_by_username(username)
-        if not user or check_password(password, user.password):
+
+        if not user or not check_password(password, user.password):
             return {'message': 'Wrong username or password.'},  HTTPStatus.UNAUTHORIZED
 
         access_token = create_access_token(identity=user.id)
-        return {'access_token': access_token}, HTTPStatus.OK
+        return {'token': access_token}, HTTPStatus.OK

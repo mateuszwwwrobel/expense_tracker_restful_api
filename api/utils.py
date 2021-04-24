@@ -8,4 +8,6 @@ def hash_password(password):
 
 
 def check_password(password, hashed):
-    return pbkdf2_sha512.verify(password, hashed)
+    salt = 'Gb89b283dNmOa'
+    salted_password = password + salt
+    return pbkdf2_sha512.verify(salted_password, hashed)

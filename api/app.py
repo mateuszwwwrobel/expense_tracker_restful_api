@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_restful import Api
-from flask_cors import CORS
 
 from flask_migrate import Migrate
 from config import Config
@@ -18,8 +17,8 @@ def create_app() -> Flask:
     app.config.from_object(Config)
     register_extensions(app)
     register_resources(app)
-    CORS(app)
     return app
+
 
 def register_extensions(app):
     db.init_app(app)
