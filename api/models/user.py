@@ -13,7 +13,13 @@ class User(db.Model):
     expenses = db.relationship('Expense', backref='_user')
 
     @classmethod
+    def get_username_by_id(cls, id):
+        user = cls.query.filter_by(id=id).first()
+        return user.username
+
+    @classmethod
     def get_user_by_username(cls, username):
+
         return cls.query.filter_by(username=username).first()
 
     @classmethod
