@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from extensions import db
+from models.user import User
 
 
 class Expense(db.Model):
@@ -23,7 +24,7 @@ class Expense(db.Model):
         return {
             'id': self.id,
             'figure': self.figure,
-            'user': self.user,
+            'user': User.get_username_by_id(self.user),
             'category': self.category,
             'currency': self.currency,
             'created_at': self.created_at.isoformat()
